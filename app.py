@@ -56,7 +56,7 @@ def handle_document(message):
 
     if upload_link:
 
-        bot.reply_to(message, f"*تم رفع الملف بنجاح!\n\nرابط الرفع: *{upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL", disable_web_page_preview=True, parse_mode="Markdown")
+        bot.reply_to(message, f"*تم رفع الملف بنجاح!\n\nرابط التحميل: *{upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL", disable_web_page_preview=True, parse_mode="Markdown")
 
     else:
 
