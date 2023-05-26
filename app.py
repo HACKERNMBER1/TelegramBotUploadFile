@@ -12,7 +12,7 @@ link = "https://uploadfile.herokuapp.com/"
 
 server = Flask("WebHook!")
 
-TOKEN = "6269468548:AAE_yHXOggWDLuDqQVE8sTnTnR6-YXTwLXo"
+TOKEN = "6269468548:AAG8upYBql2WDRYIdAGxnawJMycmj0WM7sE"
 
 bot = telebot.TeleBot(TOKEN)
 
