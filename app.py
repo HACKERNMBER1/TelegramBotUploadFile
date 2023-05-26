@@ -92,7 +92,7 @@ def webhook():
 
     bot.remove_webhook()
 
-    bot.set_webhook(url=link + token_bot)
+    bot.set_webhook(url=link + TOKEN)
 
     return "!", 200
 
