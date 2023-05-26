@@ -80,7 +80,7 @@ def webhook():
 
     bot.remove_webhook()
 
-    bot.set_webhook(url=link + TOKEN)
+    bot.set_webhook(url="https://uploadfile.herokuapp.com/" + TOKEN)
 
     return "!", 200
 
