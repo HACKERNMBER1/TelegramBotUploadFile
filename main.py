@@ -31,3 +31,4 @@ async def handle_document(_, message):
 
 if __name__ == "__main__":
     app.run()
+    time.sleep(5)
