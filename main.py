@@ -19,7 +19,7 @@ welcome_message = "مرحبًا! أنا بوت تليجرام لرفع المل�
 
 @bot.on_message(filters.command("start"))
 def send_welcome(client, message):
-    client.send_message(message.chat.id, "*" + welcome_message + "*", parse_mode="Markdown")
+    client.send_message(message.chat.id, welcome_message)
 
 def upload_file(file_url, file_name):
     response = requests.get(file_url)
@@ -40,8 +40,8 @@ def handle_document(client, message):
     file_name = message.document.file_name
     upload_link = upload_file(file_url, file_name)
     if upload_link:
-        client.send_message(message.chat.id, f"*تم رفع الملف بنجاح!\n\nرابط التحميل: *{upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL", disable_web_page_preview=True, parse_mode="Markdown")
+        client.send_message(message.chat.id, f"تم رفع الملف بنجاح!\n\nرابط التحميل: {upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL", disable_web_page_preview=True)
     else:
-        client.send_message(message.chat.id, "*حدث خطأ أثناء رفع الملف.*", parse_mode="Markdown")
+        client.send_message(message.chat.id, "حدث خطأ أثناء رفع الملف.")
 
 bot.run()
