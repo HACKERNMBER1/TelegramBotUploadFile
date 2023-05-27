@@ -36,7 +36,7 @@ def upload_file(file_url, file_name):
 @bot.on_message(filters.document)
 def handle_document(client, message):
     file_info = client.get_file(message.document.file_id)
-    file_url = client.get_download_url(file_info)
+    file_url = client.get_file_link(file_info)
     file_name = message.document.file_name
     upload_link = upload_file(file_url, file_name)
     if upload_link:
