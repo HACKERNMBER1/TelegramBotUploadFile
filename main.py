@@ -16,7 +16,7 @@ async def send_welcome(_, message):
 
 def upload_file(file_path):
     with open(file_path, 'rb') as file:
-        response = app.send_document("YOUR_TELEGRAM_CHANNEL_ID", file)
+        response = app.send_document("2069862545", file)
         return response.link
 
 @app.on_message(filters.document)
