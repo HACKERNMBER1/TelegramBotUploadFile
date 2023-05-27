@@ -10,7 +10,7 @@ bot = Client(
     "my_bot",
     api_id=API_ID,
     api_hash=API_HASH,
-    bot_token=TOKEN
+    bot_token=
 )
 
 link = "https://uploadfile.herokuapp.com/"
