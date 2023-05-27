@@ -1,9 +1,7 @@
 import os
 import requests
-from flask import Flask, request
 from pyrogram import Client, filters
 
-app = Flask(__name__)
 TOKEN = "6269468548:AAG8upYBql2WDRYIdAGxnawJMycmj0WM7sE"
 API_ID = 10311512
 API_HASH = "49589a9b575a64954e9f59062c2a3e76"
@@ -19,7 +17,7 @@ link = "https://uploadfile.herokuapp.com/"
 
 welcome_message = "مرحبًا! أنا بوت تليجرام لرفع الملفات. قم بإرسال ملف لي وسأقوم برفعه لك."
 
-@app.on_message(filters.command("start"))
+@bot.on_message(filters.command("start"))
 def send_welcome(client, message):
     client.send_message(message.chat.id, "*" + welcome_message + "*", parse_mode="Markdown")
 
@@ -35,7 +33,7 @@ def upload_file(file_url, file_name):
             return data['data']['file']['url']['short']
     return None
 
-@app.on_message(filters.document)
+@bot.on_message(filters.document)
 def handle_document(client, message):
     file_info = client.get_file(message.document.file_id)
     file_url = client.get_download_url(file_info)
@@ -46,10 +44,4 @@ def handle_document(client, message):
     else:
         client.send_message(message.chat.id, "*حدث خطأ أثناء رفع الملف.*", parse_mode="Markdown")
 
-@app.route('/' + TOKEN, methods=['POST'])
-def webhook():
-    bot.process_update(request.get_json())
-    return '', 200
-
-if __name__ == "__main__":
-    app.run(debug=False)
+bot.run()
