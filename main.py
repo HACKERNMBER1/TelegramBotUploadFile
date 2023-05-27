@@ -46,5 +46,10 @@ def handle_document(client, message):
     else:
         client.send_message(message.chat.id, "*حدث خطأ أثناء رفع الملف.*", parse_mode="Markdown")
 
+@app.route('/' + TOKEN, methods=['POST'])
+def webhook():
+    bot.process_update(request.get_json())
+    return '', 200
+
 if __name__ == "__main__":
-    bot.run()
+    app.run(debug=False)
