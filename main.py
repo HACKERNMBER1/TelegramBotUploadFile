@@ -36,9 +36,10 @@ def upload_file(file_url, file_name):
 @bot.on_message(filters.document)
 def handle_document(client, message):
     file_info = client.get_file(message.document.file_id)
-    file_url = client.get_file_link(file_info)
+    file_path = client.download_media(file_info)
     file_name = message.document.file_name
-    upload_link = upload_file(file_url, file_name)
+    upload_link = upload_file(file_path, file_name)
+    os.remove(file_path)
     if upload_link:
         client.send_message(message.chat.id, f"تم رفع الملف بنجاح!\n\nرابط التحميل: {upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL", disable_web_page_preview=True)
     else:
