@@ -17,7 +17,7 @@ TOKEN = "6269468548:AAG8upYBql2WDRYIdAGxnawJMycmj0WM7sE"
 bot = telebot.TeleBot(TOKEN)
 
 #welcome_message = "مرحبًا! أنا بوت تليجرام لرفع الملفات. قم بإرسال ملف لي وسأقوم برفعه لك."
-
+welcome_message = "مرحبا بك تم ايقاف البوت مؤقتا لحل بعض المشاكل "
 @bot.message_handler(commands=['start'])
 
 def send_welcome(message):
