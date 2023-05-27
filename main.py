@@ -13,15 +13,11 @@ bot = Client(
     bot_token=TOKEN
 )
 
-link = "https://uploadfile.herokuapp.com/"
-
 welcome_message = "مرحبًا! أنا بوت تليجرام لرفع الملفات. قم بإرسال ملف لي وسأقوم برفعه لك."
-
 
 @bot.on_message(filters.command("start"))
 def send_welcome(client, message):
     client.send_message(message.chat.id, welcome_message)
-
 
 def upload_file(file_url, file_name):
     response = requests.get(file_url)
@@ -35,17 +31,19 @@ def upload_file(file_url, file_name):
             return data['data']['file']['url']['short']
     return None
 
-
 @bot.on_message(filters.document)
 def handle_document(client, message):
     file_path = client.download_media(message)
     file_name = message.document.file_name
-    upload_link = upload_file(file_path, file_name)
+    upload_link = upload_file(link + file_path, file_name)
     os.remove(file_path)
     if upload_link:
-        client.send_message(message.chat.id, f"تم رفع الملف بنجاح!\n\nرابط التحميل: {upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL", disable_web_page_preview=True)
+        client.send_message(
+            message.chat.id,
+            f"تم رفع الملف بنجاح!\n\nرابط التحميل: {upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL",
+            disable_web_page_preview=True,
+        )
     else:
         client.send_message(message.chat.id, "حدث خطأ أثناء رفع الملف.")
-
 
 bot.run()
