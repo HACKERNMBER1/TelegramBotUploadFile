@@ -12,7 +12,7 @@ bot = Client(
     api_hash=API_HASH,
     bot_token=TOKEN
 )
-link = "https://api.anonfiles.com/upload"
+link = "https://uploadfile.herokuapp.com/"
 welcome_message = "مرحبًا! أنا بوت تليجرام لرفع الملفات. قم بإرسال ملف لي وسأقوم برفعه لك."
 
 @bot.on_message(filters.command("start"))
