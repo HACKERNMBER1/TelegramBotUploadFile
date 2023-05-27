@@ -1,30 +1,23 @@
 import os
-import requests
 from pyrogram import Client, filters
-from flask import Flask, request
+import requests
 
-link = "https://uploadfile.herokuapp.com/"
-TOKEN = "6269468548:AAG8upYBql2WDRYIdAGxnawJMycmj0WM7sE"
-API_ID = 10311512
-API_HASH = "49589a9b575a64954e9f59062c2a3e76"
-
-bot = Client(
+app = Client(
     "my_bot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=TOKEN
+    api_id=10311512,
+    api_hash="49589a9b575a64954e9f59062c2a3e76",
+    bot_token="6269468548:AAG8upYBql2WDRYIdAGxnawJMycmj0WM7sE"
 )
-
-server = Flask("WebHook!")
-
 
 welcome_message = "مرحبًا! أنا بوت تليجرام لرفع الملفات. قم بإرسال ملف لي وسأقوم برفعه لك."
 
-
-@bot.on_message(filters.command("start"))
-def send_welcome(client, message):
-    client.send_message(message.chat.id, welcome_message)
-
+@app.on_message(filters.command("start"))
+def start(client, message):
+    client.send_message(
+        message.chat.id,
+        f"<b>{welcome_message}</b>",
+        parse_mode="html"
+    )
 
 def upload_file(file_url, file_name):
     response = requests.get(file_url)
@@ -38,35 +31,25 @@ def upload_file(file_url, file_name):
             return data['data']['file']['url']['short']
     return None
 
-
-@bot.on_message(filters.document)
+@app.on_message(filters.document)
 def handle_document(client, message):
-    file_path = client.download_media(message)
-    file_name = message.document.file_name
-    upload_link = upload_file(file_path, file_name)
-    os.remove(file_path)
+    file_info = message.document
+    file_url = client.get_download_url(file_info)
+    file_name = file_info.file_name
+    upload_link = upload_file(file_url, file_name)
     if upload_link:
-        client.send_message(message.chat.id,
-                            f"تم رفع الملف بنجاح!\n\nرابط التحميل: {upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL",
-                            disable_web_page_preview=True)
+        client.send_message(
+            message.chat.id,
+            f"<b>تم رفع الملف بنجاح!\n\nرابط التحميل: {upload_link}\n\nلشراء أو تفعيل بوت مماثل لهذا، تواصل معي @VIP3GL</b>",
+            disable_web_page_preview=True,
+            parse_mode="html"
+        )
     else:
-        client.send_message(message.chat.id, "حدث خطأ أثناء رفع الملف.")
-
-
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-    json_string = request.get_data().decode('utf-8')
-    update = bot.types.Update.de_json(json_string)
-    bot.process_new_updates([update])
-    return "!", 200
-
-
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url=link + TOKEN)
-    return "!", 200
-
+        client.send_message(
+            message.chat.id,
+            "<b>حدث خطأ أثناء رفع الملف.</b>",
+            parse_mode="html"
+        )
 
 if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+    app.run()
